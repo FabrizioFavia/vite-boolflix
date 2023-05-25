@@ -1,9 +1,17 @@
 <script>
 import AppMovieCard from './AppMovieCard.vue';
+import { store } from '../store'
+
 export default {
     name: "AppMain",
     components: {
         AppMovieCard
+    },
+    data() {
+        return {
+            store,
+
+        }
     }
 }
 
@@ -11,6 +19,7 @@ export default {
 
 <template>
     <main>
+        <h2 class="text-white" v-if="store.dataResponse.length > 0">Film che contengono "{{ store.filter.query }}"</h2>
         <AppMovieCard />
     </main>
 </template>
