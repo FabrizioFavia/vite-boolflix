@@ -2,9 +2,13 @@
 import { store } from "../store";
 export default {
     name: "AppMovieCard",
+
     data() {
         return {
             store,
+
+            flagPath: `flag fi fi-`
+
 
         }
     }
@@ -20,11 +24,17 @@ export default {
                 <img v-if="!film.poster_path"
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/330px-No-Image-Placeholder.svg.png"
                     alt="">
+
                 <div v-show="film.poster_path" class="movieDescription">
                     <p><span>Titolo: </span>{{ film.title }}</p>
                     <p><span>Titolo originale: </span>{{ film.original_title }}</p>
                     <p><span>Voto: </span>{{ film.vote_average }}</p>
-                    <p><span>Overview: </span>{{ film.overview.slice(0, 250) }}...</p>
+                    <div class="flagContainer">
+                        <span class="me-3">Lingua: {{ film.original_language }}
+                        </span><span :class="flagPath + film.original_language"></span>
+                        <!-- <img class="flag" :src="flagPath + film.original_language + imgFormat"> -->
+                    </div>
+                    <p><span>Overview: </span>{{ film.overview.slice(0, 200) }}...</p>
                 </div>
 
             </div>
@@ -36,7 +46,6 @@ export default {
 
 <style lang="scss" scoped>
 @use "../main.scss" as *;
-
 
 #cardContainer {
     display: flex;
@@ -55,6 +64,14 @@ export default {
             margin-bottom: 10px;
         }
     }
+}
+
+.flagContainer {
+    display: flex;
+}
+
+.flag {
+    height: 20px;
 }
 
 .card {
@@ -81,7 +98,7 @@ img {
     z-index: 1;
 
     &:hover {
-        opacity: 0;
+        opacity: 5%;
     }
 }
 </style>
