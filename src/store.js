@@ -6,6 +6,7 @@
 import { reactive } from "vue"
 
 export const store = reactive({
+    imgPath: "https://image.tmdb.org/t/p/w500/",
     dataResponse: [],
     filter: {
         language: "it-IT",

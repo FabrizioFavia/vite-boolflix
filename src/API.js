@@ -17,7 +17,7 @@ export function getData(store) {
     axios.get(store.api + store.apiPathSearch, {
         params
     }).then(r => {
-        store.dataResponse = r.data;
+        store.dataResponse = r.data.results;
         console.log(store.dataResponse);
     })
 }
