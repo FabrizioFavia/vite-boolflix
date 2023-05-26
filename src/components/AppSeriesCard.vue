@@ -2,7 +2,7 @@
 import { store } from "../store";
 import { fixNumber } from "../methods"
 export default {
-    name: "AppMovieCard",
+    name: "AppSeriesCard",
 
     data() {
         return {
@@ -20,24 +20,24 @@ export default {
 
 <template>
     <div id="cardContainer">
-        <div v-for="film in store.dataResponseMovie">
+        <div v-for="series in store.dataResponseSeries">
             <div class="card text-white">
-                <img v-if="film.poster_path" :src="store.imgPath + film.poster_path" alt="">
-                <img v-if="!film.poster_path"
+                <img v-if="series.poster_path" :src="store.imgPath + series.poster_path" alt="">
+                <img v-if="!series.poster_path"
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/330px-No-Image-Placeholder.svg.png"
                     alt="">
 
-                <div v-show="film.poster_path" class="movieDescription">
-                    <p><span>Titolo: </span>{{ film.title }}</p>
-                    <p><span>Titolo originale: </span>{{ film.original_title }}
+                <div v-show="series.poster_path" class="movieDescription">
+                    <p><span>Titolo: </span>{{ series.name }}</p>
+                    <p><span>Titolo originale: </span>{{ series.original_name }}
                     </p>
-                    <p><span>Voto: </span>{{ fixNumber(film.vote_average) }}</p>
+                    <p><span>Voto: </span>{{ fixNumber(series.vote_average) }}</p>
                     <div class="flagContainer">
-                        <span class="me-3">Lingua: {{ film.original_language }}</span>
-                        <span class="flag" :class="flagPath + film.original_language"></span>
-                        <!-- <img class="flag" :src="flagPath + film.original_language + imgFormat"> -->
+                        <span class="me-3">Lingua: {{ series.original_language }}</span>
+                        <span class="flag" :class="flagPath + series.original_language"></span>
+                        <!-- <img class="flag" :src="flagPath + series.original_language + imgFormat"> -->
                     </div>
-                    <p><span>Overview: </span>{{ film.overview.slice(0, 20) }}...</p>
+                    <p><span>Overview: </span>{{ series.overview.slice(0, 20) }}...</p>
                 </div>
 
             </div>
