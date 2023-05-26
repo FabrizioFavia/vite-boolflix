@@ -47,6 +47,10 @@ export default {
 </template>
 
 <style scoped>
+.navbar {
+  height: 80px;
+}
+
 .navbar-brand {
   font-weight: 700;
 }

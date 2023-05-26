@@ -29,15 +29,15 @@ export default {
 
                 <div v-show="film.poster_path" class="movieDescription">
                     <p><span>Titolo: </span>{{ film.title }}</p>
-                    <p><span>Titolo originale: </span>{{ film.original_title }}
+                    <p v-if="film.original_title.length < 20"><span>Titolo originale:
+                        </span>{{ film.original_title }}
                     </p>
-                    <p><span>Voto: </span>{{ fixNumber(film.vote_average) }}</p>
+                    <p class="stars"><span>Voto: </span>{{ fixNumber(film.vote_average) }}</p>
                     <div class="flagContainer">
                         <span class="me-3">Lingua: {{ film.original_language }}</span>
                         <span class="flag" :class="flagPath + film.original_language"></span>
-                        <!-- <img class="flag" :src="flagPath + film.original_language + imgFormat"> -->
                     </div>
-                    <p><span>Overview: </span>{{ film.overview.slice(0, 20) }}...</p>
+                    <p><span>Overview: </span>{{ film.overview.slice(0, 30) }}...</p>
                 </div>
 
             </div>
@@ -53,6 +53,8 @@ export default {
 #cardContainer {
     display: flex;
     align-items: center;
+    overflow-y: hidden;
+
 
 
 
@@ -72,14 +74,10 @@ export default {
 
 .flagContainer {
     display: flex;
-    position: relative;
 }
 
 .flag {
     height: 20px;
-    position: absolute;
-    left: 60px;
-    top: 2px;
 }
 
 .card {

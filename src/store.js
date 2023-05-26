@@ -4,11 +4,7 @@
 
 
 import { reactive } from "vue"
-/* import { film } from "./components/AppMovieCard" */
 
-/* export default {
-    film
-} */
 
 export const store = reactive({
     imgPath: "https://image.tmdb.org/t/p/w500/",

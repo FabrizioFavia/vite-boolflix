@@ -1,6 +1,9 @@
 <script>
 import { store } from "../store";
-import { fixNumber } from "../methods"
+import { fixNumber } from "../methods";
+import stars from "../methods";
+import methods from "../methods"
+
 export default {
     name: "AppSeriesCard",
 
@@ -8,8 +11,9 @@ export default {
         return {
             store,
             fixNumber,
-
-            flagPath: `flag fi fi-`
+            stars,
+            flagPath: `flag fi fi-`,
+            methods
 
 
         }
@@ -29,13 +33,15 @@ export default {
 
                 <div v-show="series.poster_path" class="movieDescription">
                     <p><span>Titolo: </span>{{ series.name }}</p>
-                    <p><span>Titolo originale: </span>{{ series.original_name }}
+                    <p><span v-if="series.original_name.length < 20">Titolo originale: </span>{{ series.original_name }}
                     </p>
                     <p><span>Voto: </span>{{ fixNumber(series.vote_average) }}</p>
+                    <div v-for="star in stars">
+                        <i class="fa-solid fa-star">star</i>
+                    </div>
                     <div class="flagContainer">
                         <span class="me-3">Lingua: {{ series.original_language }}</span>
                         <span class="flag" :class="flagPath + series.original_language"></span>
-                        <!-- <img class="flag" :src="flagPath + series.original_language + imgFormat"> -->
                     </div>
                     <p><span>Overview: </span>{{ series.overview.slice(0, 20) }}...</p>
                 </div>
