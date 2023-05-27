@@ -1,7 +1,6 @@
 <script>
 import { store } from "../store";
 import { fixNumber } from "../methods";
-import stars from "../methods";
 import methods from "../methods"
 
 export default {
@@ -11,7 +10,6 @@ export default {
         return {
             store,
             fixNumber,
-            stars,
             flagPath: `flag fi fi-`,
             methods
 
@@ -35,9 +33,13 @@ export default {
                     <p><span>Titolo: </span>{{ series.name }}</p>
                     <p><span v-if="series.original_name.length < 20">Titolo originale: </span>{{ series.original_name }}
                     </p>
-                    <p><span>Voto: </span>{{ fixNumber(series.vote_average) }}</p>
-                    <div v-for="star in stars">
-                        <i class="fa-solid fa-star">star</i>
+                    <template>{{ fixNumber(series.vote_average) }}</template>
+                    <span>Voto: </span>
+                    <div class="d-flex">
+                        <template v-for="n in 5">
+                            <i :class="n <= fixNumber(series.vote_average) ? `yellow` : ` `"
+                                class="star fa-solid fa-star"></i>
+                        </template>
                     </div>
                     <div class="flagContainer">
                         <span class="me-3">Lingua: {{ series.original_language }}</span>
@@ -114,5 +116,17 @@ img {
     &:hover {
         opacity: 5%;
     }
+}
+
+.star {
+    display: inline-block;
+}
+
+.yellow {
+    color: yellow;
+}
+
+.black {
+    color: black;
 }
 </style>

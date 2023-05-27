@@ -32,7 +32,14 @@ export default {
                     <p v-if="film.original_title.length < 20"><span>Titolo originale:
                         </span>{{ film.original_title }}
                     </p>
-                    <p class="stars"><span>Voto: </span>{{ fixNumber(film.vote_average) }}</p>
+                    <template>{{ fixNumber(film.vote_average) }}</template>
+                    <span>Voto: </span>
+                    <div class="d-flex">
+                        <template v-for="n in 5">
+                            <i :class="n <= fixNumber(film.vote_average) ? `yellow` : ` `"
+                                class="star fa-solid fa-star"></i>
+                        </template>
+                    </div>
                     <div class="flagContainer">
                         <span class="me-3">Lingua: {{ film.original_language }}</span>
                         <span class="flag" :class="flagPath + film.original_language"></span>
@@ -106,5 +113,13 @@ img {
     &:hover {
         opacity: 5%;
     }
+}
+
+.yellow {
+    color: yellow;
+}
+
+.black {
+    color: black;
 }
 </style>
