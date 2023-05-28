@@ -2,7 +2,7 @@ import axios from "axios";
 import { fixNumber } from "./methods"
 
 export function getData(store) {
-
+    this.store.dataResponseMovie = [];
     if (!store.filter.query) {
         alert("inserisci il titolo di un film o di una serie")
         return
@@ -13,31 +13,41 @@ export function getData(store) {
         query: store.filter.query,
         include_adult: store.filter.adult,
         api_key: store.apiKey,
-
     };
+
+
     axios.get(store.api + store.apiPathSearch, {
         params
     }).then(r => {
-
         r.data.results.forEach(result => {
-            const element = {
-                image: result.poster_path,
-                title: result.title,
-                original: result.original_title,
-                score: fixNumber(result.vote_average),
-                language: result.original_language,
-                description: result.overview,
-                id: result.id,
-                type: "Movies"
-            }
-            store.dataResponseMovie.push(element)
+            let paramsCast = {
+                language: store.filter.language,
+                api_key: store.apiKey,
+            };
+            axios.get(store.api + store.apiPathSearchCastMovie.replace(":id", result.id), {
+                params: paramsCast
+            }).then(castResponse => {
+
+                let cast = castResponse.data.cast.slice(0, 5).map(e => e.name);
+                const element = {
+                    image: result.poster_path,
+                    title: result.title,
+                    original: result.original_title,
+                    score: fixNumber(result.vote_average),
+                    language: result.original_language,
+                    description: result.overview,
+                    id: result.id,
+                    type: "Movies",
+                    cast: cast
+                }
+                store.dataResponseMovie.push(element)
+            });
         });
-        console.log(store.dataResponseMovie);
     })
 };
 
 export function getDataSeries(store) {
-
+    this.store.dataResponseSeries = [];
     if (!store.filter.query) {
         alert("inserisci il titolo di un film o di una serie")
         return
@@ -54,19 +64,29 @@ export function getDataSeries(store) {
         params
     }).then(r => {
         r.data.results.forEach(result => {
-            const element = {
-                image: result.poster_path,
-                title: result.name,
-                original: result.original_name,
-                score: fixNumber(result.vote_average),
-                language: result.original_language,
-                description: result.overview,
-                id: result.id,
-                type: "tvSeries"
-            }
-            store.dataResponseSeries.push(element)
-        });
+            let paramsCast = {
+                language: store.filter.language,
+                api_key: store.apiKey,
+            };
+            axios.get(store.api + store.apiPathSearchCastMovie.replace(":id", result.id), {
+                params: paramsCast
+            }).then(castResponse => {
 
-        console.log("lista serie: ", store.dataResponseSeries);
+                let cast = castResponse.data.cast.slice(0, 5).map(e => e.name);
+
+                const element = {
+                    image: result.poster_path,
+                    title: result.name,
+                    original: result.original_name,
+                    score: fixNumber(result.vote_average),
+                    language: result.original_language,
+                    description: result.overview,
+                    id: result.id,
+                    type: "tvSeries",
+                    cast,
+                }
+                store.dataResponseSeries.push(element)
+            });
+        });
     })
 }

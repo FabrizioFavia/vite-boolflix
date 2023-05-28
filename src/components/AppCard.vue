@@ -42,18 +42,23 @@ export default {
                                     card.original }}
                                 </p>
                                 <template>{{ card.score }}</template>
-                                <span>Voto: </span>
+
                                 <div class="d-flex">
+                                    <span class="me-2">Voto: </span>
                                     <template v-for="n in 5">
-                                        <i :class="n <= card.score ? `yellow` : ` `" class="star fa-solid fa-star"></i>
+                                        <i :class="n <= card.score ? `yellow` : ` `" class="star mt-1 fa-solid fa-star"></i>
                                     </template>
                                 </div>
-                                <div class="flagContainer mt-2">
+                                <div class="flagContainer">
                                     <span class="me-2">Lingua:</span>
                                     <span v-if="!flagCode(card.language)" class="me-3">{{
                                         card.language
                                     }}</span>
                                     <span class="flag" :class="flagPath + flagCode(card.language)"></span>
+                                </div>
+
+                                <div class="cast">
+                                    <p><span>Cast:</span> {{ card.cast.toString() }}</p>
                                 </div>
                                 <p><span>Overview: </span>{{ card.description.slice(0, 20) }}...</p>
                             </div>
@@ -82,7 +87,6 @@ export default {
 
         span {
             font-weight: 700;
-            margin-bottom: 10px;
         }
     }
 }
@@ -102,6 +106,7 @@ export default {
     background-color: #222;
     border-radius: 10px;
     position: relative;
+    font-size: 12px;
 
 }
 
