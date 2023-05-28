@@ -1,17 +1,20 @@
 <script>
 import { store } from "../store";
 import { fixNumber } from "../methods";
-import methods from "../methods"
+import { flagCode } from "../methods";
+
 
 export default {
     name: "AppSeriesCard",
+    props: [`coverPlaceholder`],
 
     data() {
         return {
             store,
             fixNumber,
             flagPath: `flag fi fi-`,
-            methods
+            flagCode
+
 
 
         }
@@ -25,9 +28,7 @@ export default {
         <div v-for="series in store.dataResponseSeries">
             <div class="card text-white">
                 <img v-if="series.poster_path" :src="store.imgPath + series.poster_path" alt="">
-                <img v-if="!series.poster_path"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/330px-No-Image-Placeholder.svg.png"
-                    alt="">
+                <img v-if="!series.poster_path" :src="coverPlaceholder" alt="">
 
                 <div v-show="series.poster_path" class="movieDescription">
                     <p><span>Titolo: </span>{{ series.name }}</p>
@@ -41,9 +42,11 @@ export default {
                                 class="star fa-solid fa-star"></i>
                         </template>
                     </div>
-                    <div class="flagContainer">
-                        <span class="me-3">Lingua: {{ series.original_language }}</span>
-                        <span class="flag" :class="flagPath + series.original_language"></span>
+                    <div class="flagContainer mt-2">
+                        <span class="me-2">Lingua:</span>
+                        <span v-if="!flagCode(series.original_language)" class="me-3">{{ series.original_language
+                        }}</span>
+                        <span class="flag" :class="flagPath + flagCode(series.original_language)"></span>
                     </div>
                     <p><span>Overview: </span>{{ series.overview.slice(0, 20) }}...</p>
                 </div>
@@ -80,14 +83,10 @@ export default {
 
 .flagContainer {
     display: flex;
-    position: relative;
 }
 
 .flag {
     height: 20px;
-    position: absolute;
-    left: 60px;
-    top: 2px;
 }
 
 .card {

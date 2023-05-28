@@ -1,17 +1,19 @@
 <script>
 import { store } from "../store";
-import { fixNumber } from "../methods"
+import { fixNumber } from "../methods";
+import { flagCode } from "../methods";
+
 export default {
     name: "AppMovieCard",
+    props: [`coverPlaceholder`],
+
 
     data() {
         return {
             store,
             fixNumber,
-
-            flagPath: `flag fi fi-`
-
-
+            flagPath: `flag fi fi-`,
+            flagCode
         }
     }
 }
@@ -23,15 +25,13 @@ export default {
         <div v-for="film in store.dataResponseMovie">
             <div class="card text-white">
                 <img v-if="film.poster_path" :src="store.imgPath + film.poster_path" alt="">
-                <img v-if="!film.poster_path"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/330px-No-Image-Placeholder.svg.png"
-                    alt="">
-
+                <img v-if="!film.poster_path" :src="coverPlaceholder" alt="">
                 <div v-show="film.poster_path" class="movieDescription">
                     <p><span>Titolo: </span>{{ film.title }}</p>
-                    <p v-if="film.original_title.length < 20"><span>Titolo originale:
+                    <p v-if="film.original_title.length < 20 && film.original_title != film.title"><span>Titolo originale:
                         </span>{{ film.original_title }}
                     </p>
+                    <!-- CREA IL COMPONENTE STARS -->
                     <template>{{ fixNumber(film.vote_average) }}</template>
                     <span>Voto: </span>
                     <div class="d-flex">
@@ -40,9 +40,13 @@ export default {
                                 class="star fa-solid fa-star"></i>
                         </template>
                     </div>
-                    <div class="flagContainer">
-                        <span class="me-3">Lingua: {{ film.original_language }}</span>
-                        <span class="flag" :class="flagPath + film.original_language"></span>
+
+                    <div class="flagContainer mt-2">
+                        <span class="me-2">Lingua:</span>
+                        <span v-if="!flagCode(film.original_language)" class="me-3"> {{ film.original_language
+                        }}</span>
+                        <span class="flag" :class="flagPath + flagCode(film.original_language)">
+                        </span>
                     </div>
                     <p><span>Overview: </span>{{ film.overview.slice(0, 30) }}...</p>
                 </div>

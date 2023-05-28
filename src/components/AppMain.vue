@@ -12,6 +12,7 @@ export default {
     data() {
         return {
             store,
+            coverPlaceholder: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/330px-No-Image-Placeholder.svg.png"
 
         }
     }
@@ -24,12 +25,12 @@ export default {
         <h2 class="text-white mb-3 ms-2" v-if="store.dataResponseMovie.length > 0">Film che contengono"{{
             store.filter.query }}"</h2>
         <div class="movies">
-            <AppMovieCard />
+            <AppMovieCard :coverPlaceholder="coverPlaceholder" />
         </div>
         <h2 class="text-white mb-3 ms-2 mt-3" v-if="store.dataResponseMovie.length > 0">Serie che contengono"{{
             store.filter.query }}"</h2>
         <div class="movies">
-            <AppSeriesCard />
+            <AppSeriesCard :coverPlaceholder="coverPlaceholder" />
         </div>
 
 
