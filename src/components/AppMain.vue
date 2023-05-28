@@ -1,13 +1,13 @@
 <script>
-import AppMovieCard from './AppMovieCard.vue';
-import AppSeriesCard from './AppSeriesCard.vue';
+
+import AppCard from './AppCard.vue';
 import { store } from '../store'
 
 export default {
     name: "AppMain",
     components: {
         AppMovieCard,
-        AppSeriesCard
+        AppCard
     },
     data() {
         return {
@@ -22,15 +22,13 @@ export default {
 
 <template>
     <main>
-        <h2 class="text-white mb-3 ms-2" v-if="store.dataResponseMovie.length > 0">Film che contengono"{{
-            store.filter.query }}"</h2>
+        <h2 class="text-white mb-3 ms-2" v-if="store.dataResponseMovie.length > 0">Film</h2>
         <div class="movies">
-            <AppMovieCard :coverPlaceholder="coverPlaceholder" />
+            <AppCard :coverPlaceholder="coverPlaceholder" :cardElements="store.dataResponseMovie" />
         </div>
-        <h2 class="text-white mb-3 ms-2 mt-3" v-if="store.dataResponseMovie.length > 0">Serie che contengono"{{
-            store.filter.query }}"</h2>
+        <h2 class="text-white mb-3 ms-2 mt-3" v-if="store.dataResponseSeries.length > 0">Serie Tv</h2>
         <div class="movies">
-            <AppSeriesCard :coverPlaceholder="coverPlaceholder" />
+            <AppCard :coverPlaceholder="coverPlaceholder" :cardElements="store.dataResponseSeries" />
         </div>
 
 

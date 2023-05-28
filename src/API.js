@@ -1,4 +1,5 @@
 import axios from "axios";
+import { fixNumber } from "./methods"
 
 export function getData(store) {
 
@@ -17,7 +18,20 @@ export function getData(store) {
     axios.get(store.api + store.apiPathSearch, {
         params
     }).then(r => {
-        store.dataResponseMovie = r.data.results;
+
+        r.data.results.forEach(result => {
+            const element = {
+                image: result.poster_path,
+                title: result.title,
+                original: result.original_title,
+                score: fixNumber(result.vote_average),
+                language: result.original_language,
+                description: result.overview,
+                id: result.id,
+                type: "Movies"
+            }
+            store.dataResponseMovie.push(element)
+        });
         console.log(store.dataResponseMovie);
     })
 };
@@ -39,7 +53,20 @@ export function getDataSeries(store) {
     axios.get(store.api + store.apiPathSearchSeries, {
         params
     }).then(r => {
-        store.dataResponseSeries = r.data.results;
+        r.data.results.forEach(result => {
+            const element = {
+                image: result.poster_path,
+                title: result.name,
+                original: result.original_name,
+                score: fixNumber(result.vote_average),
+                language: result.original_language,
+                description: result.overview,
+                id: result.id,
+                type: "tvSeries"
+            }
+            store.dataResponseSeries.push(element)
+        });
+
         console.log("lista serie: ", store.dataResponseSeries);
     })
 }
