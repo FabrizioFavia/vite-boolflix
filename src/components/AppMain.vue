@@ -6,7 +6,6 @@ import { store } from '../store'
 export default {
     name: "AppMain",
     components: {
-        AppMovieCard,
         AppCard
     },
     data() {

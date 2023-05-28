@@ -36,7 +36,7 @@ export default {
                             <img v-if="!card.image" :src="coverPlaceholder" alt="">
                         </div>
                         <div class="flip-card-back">
-                            <div v-show="card.image" class="movieDescription">
+                            <div class="movieDescription">
                                 <p><span>Titolo: </span>{{ card.title }}</p>
                                 <p><span v-if="card.original.length < 20">Titolo originale: </span>{{
                                     card.original }}
