@@ -3,13 +3,16 @@ import { store } from "../store";
 import { getData } from '../API';
 import { getDataSeries } from "../API";
 
+
 export default {
   name: "AppHeader",
+
   data() {
     return {
       store,
       getData,
       getDataSeries,
+
     }
   }
 }
@@ -37,6 +40,11 @@ export default {
           </li>
         </ul>
         <div class="d-flex">
+          <!-- OFFCANVAS BTN -->
+          <button class="btn btn-dark border-light me-4" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            Filters
+          </button>
           <input @keyup.enter="getData(store), getDataSeries(store)" v-model="store.filter.query"
             class="form-control me-4" placeholder="Cerca un titolo" aria-label="Search">
           <button @click="getData(store), getDataSeries(store)" class="btn btn-outline-light">Search</button>
@@ -53,5 +61,9 @@ export default {
 
 .navbar-brand {
   font-weight: 700;
+}
+
+.canvasBtn {
+  max-height: 38px;
 }
 </style>

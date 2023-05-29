@@ -1,12 +1,14 @@
 <script>
 
 import AppCard from './AppCard.vue';
-import { store } from '../store'
+import { store } from '../store';
+import AppGenresSelect from "./AppGenresSelect.vue";
 
 export default {
     name: "AppMain",
     components: {
-        AppCard
+        AppCard,
+        AppGenresSelect
     },
     data() {
         return {
@@ -21,6 +23,10 @@ export default {
 
 <template>
     <main>
+        <!-- OFFCANCAS -->
+        <AppGenresSelect />
+
+        <!-- OFFCANVAS -->
         <h2 class="text-white mb-3 ms-2" v-if="store.dataResponseMovie.length > 0">Film</h2>
         <div class="movies">
             <AppCard :coverPlaceholder="coverPlaceholder" :cardElements="store.dataResponseMovie" />

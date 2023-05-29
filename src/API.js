@@ -15,7 +15,6 @@ export function getData(store) {
         api_key: store.apiKey,
     };
 
-
     axios.get(store.api + store.apiPathSearch, {
         params
     }).then(r => {
@@ -38,9 +37,18 @@ export function getData(store) {
                     description: result.overview,
                     id: result.id,
                     type: "Movies",
-                    cast: cast
+                    cast: cast,
+                    genre: result.genre_ids
+                };
+
+                if (store.filter.movieGenre) {
+                    if (element.genre.includes(store.filter.movieGenre)) {
+                        store.dataResponseMovie.push(element);
+                    }
+                } else {
+                    store.dataResponseMovie.push(element);
                 }
-                store.dataResponseMovie.push(element)
+
             });
         });
     })
@@ -58,6 +66,7 @@ export function getDataSeries(store) {
         query: store.filter.query,
         include_adult: store.filter.adult,
         api_key: store.apiKey,
+
 
     };
     axios.get(store.api + store.apiPathSearchSeries, {
@@ -84,9 +93,47 @@ export function getDataSeries(store) {
                     id: result.id,
                     type: "tvSeries",
                     cast,
+                    genre: result.genre_ids
                 }
-                store.dataResponseSeries.push(element)
+
+                if (store.filter.tvGenre) {
+                    if (element.genre.includes(store.filter.tvGenre)) {
+                        store.dataResponseSeries.push(element)
+                    }
+                } else {
+                    store.dataResponseSeries.push(element)
+                }
+
             });
         });
+    })
+}
+
+
+export function getMovieGenres(store) {
+    this.store.movieGenres = []
+    let params = {
+        language: "it",
+        api_key: store.apiKey
+    };
+    axios.get(store.api + store.apiPathSearchMovieGenres, {
+        params
+    }).then(r => {
+        store.movieGenres = r.data.genres
+        console.log("Generi ", store.movieGenres)
+    })
+}
+
+export function getTvGenres(store) {
+    this.store.tvGenres = []
+    let params = {
+        language: "it",
+        api_key: store.apiKey
+    };
+    axios.get(store.api + store.apiPathSearchTvGenres, {
+        params
+    }).then(r => {
+        store.tvGenres = r.data.genres
+        console.log("Generi serie ", store.tvGenres)
     })
 }

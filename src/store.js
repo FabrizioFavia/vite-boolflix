@@ -11,10 +11,14 @@ export const store = reactive({
     imgPath: "https://image.tmdb.org/t/p/w500/",
     dataResponseMovie: [],
     dataResponseSeries: [],
+    movieGenres: [],
+    tvGenres: [],
     filter: {
         language: "it-IT",
         page: 1,
         query: null,
+        movieGenre: "",
+        tvGenre: "",
         adult: false
     },
     apiPathTrending: "/trending/movie/week",
@@ -23,5 +27,7 @@ export const store = reactive({
     apiPathSearchSeries: "/search/tv",
     apiPathSearchCastMovie: "/movie/:id/credits",
     apiPathSearchCastSeries: "/tv/:id/credits",
+    apiPathSearchMovieGenres: "/genre/movie/list",
+    apiPathSearchTvGenres: "/genre/tv/list",
     api: "https://api.themoviedb.org/3"
 });

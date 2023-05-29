@@ -107,7 +107,6 @@ export default {
     border-radius: 10px;
     position: relative;
     font-size: 12px;
-
 }
 
 img {
@@ -116,10 +115,6 @@ img {
     object-fit: cover;
     object-position: center;
     border-radius: 10px;
-
-    &:hover {
-        opacity: 5%;
-    }
 }
 
 .star {
